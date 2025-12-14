@@ -25,7 +25,9 @@ public class WeeklyPlayerStatsService {
                 req.week(),
                 req.rating(),
                 req.goals(),
-                req.assists()
+                req.assists(),
+                req.chances(),   // neu
+                req.missed()     // neu
         );
         return repo.save(stats);
     }

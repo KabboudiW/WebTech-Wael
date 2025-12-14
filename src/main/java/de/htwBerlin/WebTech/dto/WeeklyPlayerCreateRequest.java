@@ -7,5 +7,7 @@ public record WeeklyPlayerCreateRequest(
         String week,
         double rating,
         int goals,
-        int assists
+        int assists,
+        int chances,
+        int missed
 ) {}
