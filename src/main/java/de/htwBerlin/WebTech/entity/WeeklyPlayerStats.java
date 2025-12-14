@@ -18,6 +18,8 @@ public class WeeklyPlayerStats {
     private double rating;
     private int goals;
     private int assists;
+    private int chances;
+    private int missed;
 
     public WeeklyPlayerStats() {}
 
@@ -28,7 +30,9 @@ public class WeeklyPlayerStats {
             String week,
             double rating,
             int goals,
-            int assists
+            int assists,
+            int chances,
+            int missed
     ) {
         this.playerId = playerId;
         this.playerName = playerName;
@@ -37,6 +41,8 @@ public class WeeklyPlayerStats {
         this.rating = rating;
         this.goals = goals;
         this.assists = assists;
+        this.chances = chances;
+        this.missed = missed;
     }
 
     // Getter-Methoden
@@ -48,4 +54,6 @@ public class WeeklyPlayerStats {
     public double getRating() { return rating; }
     public int getGoals() { return goals; }
     public int getAssists() { return assists; }
+    public int getChances() { return chances; }
+    public int getMissed() { return missed; }
 }

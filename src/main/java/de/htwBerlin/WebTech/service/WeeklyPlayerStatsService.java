@@ -30,19 +30,26 @@ public class WeeklyPlayerStatsService {
         return repo.save(stats);
     }
     public List<PlayerRow> getWeeklyTopPlayers(String week, String metric) {
-        var stats = repo.findByWeek(week); // nur nach Woche filtern
-
-        return stats.stream()
+        return repo.findByWeek(week) // hole alle Spieler der Woche
+                .stream()
                 .map(stat -> {
                     double value;
                     switch (metric.toLowerCase()) {
                         case "goals" -> value = stat.getGoals();
                         case "assists" -> value = stat.getAssists();
-                        default -> value = stat.getRating();
+                        case "chances" -> value = stat.getChances(); // hier musst du evtl. eine neue Spalte in WeeklyPlayerStats hinzufügen
+                        case "missed" -> value = stat.getMissed(); // auch neue Spalte nötig
+                        default -> value = stat.getRating(); // "Best Rated"
                     }
-                    return new PlayerRow(stat.getPlayerId(), stat.getPlayerName(), stat.getTeamName(), value);
+                    return new PlayerRow(
+                            stat.getPlayerId(),
+                            stat.getPlayerName(),
+                            stat.getTeamName(),
+                            value
+                    );
                 })
-                .sorted((a, b) -> Double.compare(b.value(), a.value())) // absteigend
+                .sorted((a, b) -> Double.compare(b.value(), a.value())) // absteigend sortieren
+                .limit(10) // Top 10 Spieler
                 .toList();
     }
 
