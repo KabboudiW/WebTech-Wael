@@ -38,4 +38,14 @@ public class WeeklyPlayerStats {
         this.goals = goals;
         this.assists = assists;
     }
+
+    // Getter-Methoden
+    public Long getId() { return id; }
+    public Long getPlayerId() { return playerId; }
+    public String getPlayerName() { return playerName; }
+    public String getTeamName() { return teamName; }
+    public String getWeek() { return week; }
+    public double getRating() { return rating; }
+    public int getGoals() { return goals; }
+    public int getAssists() { return assists; }
 }

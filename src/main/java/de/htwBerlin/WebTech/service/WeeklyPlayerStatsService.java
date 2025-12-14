@@ -29,5 +29,22 @@ public class WeeklyPlayerStatsService {
         );
         return repo.save(stats);
     }
+    public List<PlayerRow> getWeeklyTopPlayers(String week, String metric) {
+        var stats = repo.findByWeek(week); // nur nach Woche filtern
+
+        return stats.stream()
+                .map(stat -> {
+                    double value;
+                    switch (metric.toLowerCase()) {
+                        case "goals" -> value = stat.getGoals();
+                        case "assists" -> value = stat.getAssists();
+                        default -> value = stat.getRating();
+                    }
+                    return new PlayerRow(stat.getPlayerId(), stat.getPlayerName(), stat.getTeamName(), value);
+                })
+                .sorted((a, b) -> Double.compare(b.value(), a.value())) // absteigend
+                .toList();
+    }
+
 }
 
