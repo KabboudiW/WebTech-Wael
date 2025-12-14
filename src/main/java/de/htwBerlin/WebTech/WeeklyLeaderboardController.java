@@ -3,13 +3,21 @@ package de.htwBerlin.WebTech;
 import de.htwBerlin.WebTech.dto.PlayerRow;
 import de.htwBerlin.WebTech.dto.WeeklyTopResponse;
 import org.springframework.web.bind.annotation.*;
-
+import de.htwBerlin.WebTech.dto.WeeklyPlayerCreateRequest;
+import de.htwBerlin.WebTech.service.WeeklyPlayerStatsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:5173", "https://webtech-wael-frontend.onrender.com"})
 @RestController
 @RequestMapping("/api/weekly")
 public class WeeklyLeaderboardController {
+    private final WeeklyPlayerStatsService service;
+
+    public WeeklyLeaderboardController(WeeklyPlayerStatsService service) {
+        this.service = service;
+    }
 
     @GetMapping("/top")
     public WeeklyTopResponse top(
@@ -50,6 +58,13 @@ public class WeeklyLeaderboardController {
         };
 
         return new WeeklyTopResponse(week, metric, rows);
+    }
+    @PostMapping
+    public ResponseEntity<Void> create(
+            @RequestBody WeeklyPlayerCreateRequest request
+    ) {
+        service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
