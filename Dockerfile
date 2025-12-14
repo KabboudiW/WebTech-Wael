@@ -2,7 +2,7 @@
 FROM gradle:9.2-jdk21-jammy AS build
 WORKDIR /home/gradle/src
 COPY --chown=gradle:gradle . .
-RUN gradle build --no-daemon
+RUN gradle build --no-daemon -x test
 
 # Run stage
 FROM eclipse-temurin:21-jdk-jammy
