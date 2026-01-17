@@ -14,13 +14,6 @@ public class ExternalFootballController {
         this.client = client;
     }
 
-    @GetMapping("/standings")
-    public ResponseEntity<String> standings(@RequestParam String league) {
-        String code = CompetitionMapping.MAP.get(league);
-        if (code == null) return ResponseEntity.badRequest().body("Unknown league: " + league);
-        return ResponseEntity.ok(client.getStandingsJson(code));
-    }
-
     @GetMapping("/scorers")
     public ResponseEntity<String> scorers(@RequestParam String league) {
         String code = CompetitionMapping.MAP.get(league);
