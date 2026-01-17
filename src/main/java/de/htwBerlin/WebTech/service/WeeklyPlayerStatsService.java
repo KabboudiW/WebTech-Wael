@@ -31,8 +31,12 @@ public class WeeklyPlayerStatsService {
         );
         return repo.save(stats);
     }
+
+    List<WeeklyPlayerStats> findByWeek(String week) {
+        repo.findAll()
+    }
     public List<PlayerRow> getWeeklyTopPlayers(String week, String metric) {
-        return repo.findByWeek(week) // hole alle Spieler der Woche
+        return this.findByWeek(week) // hole alle Spieler der Woche
                 .stream()
                 .map(stat -> {
                     double value;

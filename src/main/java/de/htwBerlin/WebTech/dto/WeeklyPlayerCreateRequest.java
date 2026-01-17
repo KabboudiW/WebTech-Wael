@@ -4,6 +4,7 @@ public record WeeklyPlayerCreateRequest(
         Long playerId,
         String playerName,
         String teamName,
+        String league,
         String week,
         double rating,
         int goals,
