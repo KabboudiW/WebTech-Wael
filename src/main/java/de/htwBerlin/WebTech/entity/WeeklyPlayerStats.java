@@ -13,7 +13,7 @@ public class WeeklyPlayerStats {
     private Long playerId;
     private String playerName;
     private String teamName;
-    private String League;
+    private String league;
     private String week;
 
     private double rating;
@@ -39,7 +39,7 @@ public class WeeklyPlayerStats {
         this.playerId = playerId;
         this.playerName = playerName;
         this.teamName = teamName;
-        this.League = league;
+        this.league = league;
         this.week = week;
         this.rating = rating;
         this.goals = goals;
@@ -53,7 +53,7 @@ public class WeeklyPlayerStats {
     public Long getPlayerId() { return playerId; }
     public String getPlayerName() { return playerName; }
     public String getTeamName() { return teamName; }
-    public String getLeague() { return League; }
+    public String getleague() { return league; }
     public String getWeek() { return week; }
     public double getRating() { return rating; }
     public int getGoals() { return goals; }
