@@ -22,7 +22,8 @@ public class WeeklyLeaderboardController {
     @GetMapping("/top")
     public WeeklyTopResponse top(
             @RequestParam(defaultValue = "CURRENT") String week,
-            @RequestParam(defaultValue = "rating") String metric
+            @RequestParam(defaultValue = "rating") String metric,
+            @RequestParam(required = false) String league
     ) {
         if ("CURRENT".equalsIgnoreCase(week)) {
             var now = java.time.LocalDate.now();
@@ -33,7 +34,7 @@ public class WeeklyLeaderboardController {
         }
 
         // Fetch real data from the service
-        List<PlayerRow> rows = service.getWeeklyTopPlayers(week, metric);
+        List<PlayerRow> rows = service.getWeeklyTopPlayers(week, metric,league);
 
         return new WeeklyTopResponse(week, metric, rows);
     }
