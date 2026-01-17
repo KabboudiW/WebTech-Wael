@@ -19,9 +19,15 @@ public class FootballDataClient {
                 .build();
     }
 
-    public String getScorersJson(String competitionCode) {
+    // ✅ NEW: Match Results / Matches in a date range
+    public String getMatchesJson(String competitionCode, String dateFrom, String dateTo) {
         return restClient.get()
-                .uri("/competitions/{code}/scorers", competitionCode)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/competitions/{code}/matches")
+                        .queryParam("dateFrom", dateFrom)
+                        .queryParam("dateTo", dateTo)
+                        .build(competitionCode)
+                )
                 .retrieve()
                 .body(String.class);
     }
