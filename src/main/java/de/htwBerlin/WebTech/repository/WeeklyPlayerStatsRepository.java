@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface WeeklyPlayerStatsRepository
         extends JpaRepository<WeeklyPlayerStats, Long> {
+    List<WeeklyPlayerStats> findByWeek(String week);
+    List<WeeklyPlayerStats> findByWeekAndLeagueIgnoreCase(String week, String league);
 }

@@ -22,6 +22,7 @@ public class WeeklyPlayerStatsService {
                 req.playerId(),
                 req.playerName(),
                 req.teamName(),
+                req.league(),
                 req.week(),
                 req.rating(),
                 req.goals(),
@@ -31,31 +32,36 @@ public class WeeklyPlayerStatsService {
         );
         return repo.save(stats);
     }
+    public List<PlayerRow> getWeeklyTopPlayers(String week, String metric, String league) {
 
-    List<WeeklyPlayerStats> findByWeek(String week) {
-        repo.findAll()
-    }
-    public List<PlayerRow> getWeeklyTopPlayers(String week, String metric) {
-        return this.findByWeek(week) // hole alle Spieler der Woche
-                .stream()
+        // 1) Daten holen: mit oder ohne league-filter
+        List<WeeklyPlayerStats> stats =
+                (league == null || league.isBlank())
+                        ? repo.findByWeek(week)
+                        : repo.findByWeekAndLeagueIgnoreCase(week, league);
+
+        // 2) Mapping + Sortierung + Top10
+        String m = (metric == null) ? "rating" : metric.toLowerCase();
+
+        return stats.stream()
                 .map(stat -> {
-                    double value;
-                    switch (metric.toLowerCase()) {
-                        case "goals" -> value = stat.getGoals();
-                        case "assists" -> value = stat.getAssists();
-                        case "chances" -> value = stat.getChances(); // hier musst du evtl. eine neue Spalte in WeeklyPlayerStats hinzufügen
-                        case "missed" -> value = stat.getMissed(); // auch neue Spalte nötig
-                        default -> value = stat.getRating(); // "Best Rated"
-                    }
+                    double value = switch (m) {
+                        case "goals" -> stat.getGoals();
+                        case "assists" -> stat.getAssists();
+                        case "chances" -> stat.getChances();
+                        case "missed" -> stat.getMissed();
+                        default -> stat.getRating();
+                    };
+
                     return new PlayerRow(
                             stat.getPlayerId(),
                             stat.getPlayerName(),
-                            stat.getTeamName(),
+                            stat.getTeamName(), // kommt in PlayerRow als "team"
                             value
                     );
                 })
-                .sorted((a, b) -> Double.compare(b.value(), a.value())) // absteigend sortieren
-                .limit(10) // Top 10 Spieler
+                .sorted((a, b) -> Double.compare(b.value(), a.value()))
+                .limit(10)
                 .toList();
     }
 
