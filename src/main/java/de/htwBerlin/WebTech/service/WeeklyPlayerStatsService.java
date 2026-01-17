@@ -32,13 +32,30 @@ public class WeeklyPlayerStatsService {
         );
         return repo.save(stats);
     }
-    public List<PlayerRow> getWeeklyTopPlayers(String week, String metric, String league) {
+    public List<PlayerRow> getWeeklyTopPlayers(String week, String metric, String league, String search) {
 
         // 1) Daten holen: mit oder ohne league-filter
-        List<WeeklyPlayerStats> stats =
-                (league == null || league.isBlank())
-                        ? repo.findByWeek(week)
-                        : repo.findByWeekAndLeagueIgnoreCase(week, league);
+        List<WeeklyPlayerStats> stats;
+
+        boolean hasLeague = league != null && !league.isBlank();
+        boolean hasSearch = search != null && !search.isBlank();
+
+        if (!hasLeague && !hasSearch) {
+            stats = repo.findByWeek(week);
+        } else if (hasLeague && !hasSearch) {
+            stats = repo.findByWeekAndLeagueIgnoreCase(week, league);
+        } else if (!hasLeague) {
+            stats = repo.findByWeekAndPlayerNameContainingIgnoreCaseOrWeekAndTeamNameContainingIgnoreCase(
+                    week, search,
+                    week, search
+            );
+        } else {
+            stats = repo.findByWeekAndLeagueIgnoreCaseAndPlayerNameContainingIgnoreCaseOrWeekAndLeagueIgnoreCaseAndTeamNameContainingIgnoreCase(
+                    week, league, search,
+                    week, league, search
+            );
+        }
+
 
         // 2) Mapping + Sortierung + Top10
         String m = (metric == null) ? "rating" : metric.toLowerCase();

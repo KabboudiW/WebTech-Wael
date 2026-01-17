@@ -9,4 +9,13 @@ public interface WeeklyPlayerStatsRepository
         extends JpaRepository<WeeklyPlayerStats, Long> {
     List<WeeklyPlayerStats> findByWeek(String week);
     List<WeeklyPlayerStats> findByWeekAndLeagueIgnoreCase(String week, String league);
+    List<WeeklyPlayerStats> findByWeekAndPlayerNameContainingIgnoreCaseOrWeekAndTeamNameContainingIgnoreCase(
+            String week1, String playerName,
+            String week2, String teamName
+    );
+
+    List<WeeklyPlayerStats> findByWeekAndLeagueIgnoreCaseAndPlayerNameContainingIgnoreCaseOrWeekAndLeagueIgnoreCaseAndTeamNameContainingIgnoreCase(
+            String week1, String league1, String playerName,
+            String week2, String league2, String teamName
+    );
 }
