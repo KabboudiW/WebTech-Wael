@@ -46,11 +46,23 @@ public class WeeklyLeaderboardController {
     }
     @PostMapping
     public ResponseEntity<Void> create(
+            @RequestHeader(name = "X-Admin-Token", required = false) String token,
             @RequestBody WeeklyPlayerCreateRequest request
     ) {
+        // Wenn kein ADMIN_TOKEN gesetzt ist: Endpoint praktisch deaktivieren
+        if (adminToken == null || adminToken.isBlank()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // Token prüfen
+        if (token == null || !adminToken.equals(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @DeleteMapping("/reset")
     public ResponseEntity<Void> reset(
             @RequestHeader(name = "X-Admin-Token", required = false) String token
