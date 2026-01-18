@@ -24,7 +24,8 @@ public class WeeklyLeaderboardController {
             @RequestParam(defaultValue = "CURRENT") String week,
             @RequestParam(defaultValue = "rating") String metric,
             @RequestParam(required = false) String league,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "5") int limit
 
     ) {
         if ("CURRENT".equalsIgnoreCase(week)) {
@@ -36,7 +37,7 @@ public class WeeklyLeaderboardController {
         }
 
         // Fetch real data from the service
-        List<PlayerRow> rows = service.getWeeklyTopPlayers(week, metric, league, search);
+        List<PlayerRow> rows = service.getWeeklyTopPlayers(week, metric, league, search, limit);
 
 
         return new WeeklyTopResponse(week, metric, rows);
