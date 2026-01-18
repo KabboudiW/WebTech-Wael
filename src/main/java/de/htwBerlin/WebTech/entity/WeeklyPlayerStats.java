@@ -3,7 +3,15 @@ package de.htwBerlin.WebTech.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "weekly_player_stats")
+@Table(
+        name = "weekly_player_stats",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_week_league_player",
+                        columnNames = {"week", "league", "playerId"}
+                )
+        }
+)
 public class WeeklyPlayerStats {
 
     @Id
