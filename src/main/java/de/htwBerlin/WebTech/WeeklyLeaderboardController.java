@@ -48,5 +48,10 @@ public class WeeklyLeaderboardController {
         service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    @DeleteMapping("/reset")
+    public ResponseEntity<Void> reset() {
+        service.deleteAll();
+        return ResponseEntity.noContent().build();
+    }
 
 }

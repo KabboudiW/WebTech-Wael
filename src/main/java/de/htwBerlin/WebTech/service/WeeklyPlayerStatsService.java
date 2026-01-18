@@ -81,6 +81,9 @@ public class WeeklyPlayerStatsService {
                 .limit(5)
                 .toList();
     }
+    public void deleteAll() {
+        repo.deleteAll();
+    }
 
 }
 
