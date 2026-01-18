@@ -1,65 +1,88 @@
-# WebTech-Wael
-Team Mitglieder: Wael Kabboudi
+# 🏆 Weekly Football Leaderboard
 
-Ich baue ein Weekly Football Leaderboard
+**Teammitglied:**  
+Wael Kabboudi
 
-Ein wöchentliches Ranking-System für Fußballspieler basierend auf verschiedenen Performance-Metriken.
+---
 
-# Projektbeschreibung:
-Das Weekly Football Leaderboard zeigt die besten Spieler pro Kalenderwoche in fünf Kategorien:
+## 📌 Projektbeschreibung
 
-   1- Best Rated: Höchste durchschnittliche Match-Bewertung
+Das **Weekly Football Leaderboard** ist eine Webanwendung zur Darstellung eines **wöchentlichen Rankings von Fußballspielern** sowie von **Spielergebnissen pro Liga und Woche**.
 
-   2- Goals: Meiste Tore
+Die Anwendung kombiniert:
+- **Eigene Spielerstatistiken** (Datenbank)
+- **Externe Spielerdaten / Spielergebnisse** (Football API)
 
-   3- Assists: Meiste Vorlagen
+Ziel ist es, Spielerleistungen übersichtlich zu vergleichen und gleichzeitig reale Spielergebnisse pro Liga darzustellen.
 
-   4- Chances Created: Meiste kreierte Torchancen
+---
 
-   5- Missed Chances: Meiste vergebene Chancen
+## 📊 Spielerstatistiken – Ranking-Kategorien
 
-# Tech Stack
-Backend: Java 25 mit Spring Boot 3.5.6
-Build Tool: Gradle 9.0.0
+Das Leaderboard unterstützt folgende **5 Performance-Metriken**:
 
-# Domain Model
- Player
+1. **Best Rated** – Höchste durchschnittliche Match-Bewertung
+2. **Goals** – Meiste erzielte Tore
+3. **Assists** – Meiste Torvorlagen
+4. **Chances Created** – Meiste kreierte Torchancen
+5. **Missed Chances** – Meiste vergebene Torchancen
 
-    id: Eindeutige Spieler-ID
+Für jede Kategorie werden die **Top-Spieler einer ausgewählten Kalenderwoche** angezeigt.
 
-    name: Spielername
+---
 
-    team: Vereinsname
+## ⚽ Spielergebnisse (Match Results)
 
-    position: Spielposition
+Zusätzlich bietet die Anwendung eine Ansicht für **Spielergebnisse pro Liga und Woche**.
 
- PlayerWeekStat
+### Eigenschaften:
+- Anzeige aller Spiele einer Liga für eine ausgewählte Woche
+- Darstellung von:
+    - Heimteam
+    - Auswärtsteam
+    - Endergebnis
+- Daten werden **live aus einer externen Football API** abgerufen
+- Umschaltbar im Frontend zwischen:
+    - **Player Stats**
+    - **Match Results**
 
-    week: Kalenderwoche (YYYY-WW)
+👉 Spielergebnisse werden **nicht in der lokalen Datenbank gespeichert**, sondern dynamisch geladen.
 
-    playerId: Referenz auf Spieler
+---
 
-    rating: Durchschnittsbewertung (0.0-10.0)
+## 🧱 Domain Model
 
-    goals: Anzahl Tore
+### Player
+- `id` – Eindeutige Spieler-ID
+- `name` – Spielername
+- `team` – Vereinsname
+- `position` – Spielposition
 
-    assists: Anzahl Vorlagen
+### PlayerWeekStat
+- `week` – Kalenderwoche (YYYY-WW)
+- `playerId` – Referenz auf Player
+- `rating` – Durchschnittsbewertung (0.0 – 10.0)
+- `goals` – Anzahl erzielter Tore
+- `assists` – Anzahl Vorlagen
+- `chancesCreated` – Anzahl kreierter Chancen
+- `missedChances` – Anzahl vergebener Chancen
 
-    chancesCreated: Anzahl kreierter Chancen
+---
 
-    missedChances: Anzahl vergebener Chancen
+## 🛠️ Tech Stack
 
+### Backend
+- Java 25
+- Spring Boot 3.5.6
+- Gradle 9.0.0
+- REST API
+- JPA / Datenbank
+- Externe Football API (Spielergebnisse)
 
-# Rating
-http://localhost:8080/api/weekly/top
-# Aktuelle Woche, beste Torschützen
-http://localhost:8080/api/weekly/top?metric=goals
+### Frontend
+- Vue 3
+- Vite
+- TypeScript
+- REST-basierte API-Integration
 
-#  meiste Assists
-http://localhost:8080/api/weekly/top?metric=assists
-
-# Meiste vergebene Chancen
-http://localhost:8080/api/weekly/top?metric=missed
-
-
-
+--
