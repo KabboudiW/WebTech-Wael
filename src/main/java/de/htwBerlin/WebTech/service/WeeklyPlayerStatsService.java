@@ -78,7 +78,7 @@ public class WeeklyPlayerStatsService {
                     );
                 })
                 .sorted((a, b) -> Double.compare(b.value(), a.value()))
-                .limit(10)
+                .limit(5)
                 .toList();
     }
 
